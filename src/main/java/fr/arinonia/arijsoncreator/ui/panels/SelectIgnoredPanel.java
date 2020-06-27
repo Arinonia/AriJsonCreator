@@ -67,7 +67,7 @@ public class SelectIgnoredPanel extends Panel {
         add.setStyle("-fx-padding: 0.7em 0.57em; -fx-text-fill: #fff; -fx-border-color: #aa652f");
         add.setOnMouseClicked(e->{
             if (jfxTextField.getText() != null && !jfxTextField.getText().equalsIgnoreCase("")){
-                panelManager.getAriJsonCreator().getIgnoredFiles().add(jfxTextField.getText());
+                panelManager.getAriJsonCreator().getData().getIgnoredFiles().add(jfxTextField.getText());
                 jfxTextField.setText("");
             }else{
                 JFXDialogLayout layout = new JFXDialogLayout();
@@ -102,7 +102,7 @@ public class SelectIgnoredPanel extends Panel {
         back.setOnMouseExited(e->panelManager.getLayout().setCursor(Cursor.DEFAULT));
         back.setMaxSize(50,50);
         back.setOnMouseClicked(e->{
-            panelManager.getAriJsonCreator().getIgnoredFiles().clear();
+            panelManager.getAriJsonCreator().getData().getIgnoredFiles().clear();
             panelManager.getAriJsonCreator().getSizeFileList().clear();
             panelManager.getAriJsonCreator().getFileNameList().clear();
             panelManager.getAriJsonCreator().getFilesList().clear();

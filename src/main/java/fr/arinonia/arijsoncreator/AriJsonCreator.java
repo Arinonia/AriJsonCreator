@@ -21,7 +21,6 @@ public class AriJsonCreator {
     private final ArrayList<String> filesList = new ArrayList<>();
     private final ArrayList<String> sizeFileList = new ArrayList<>();
     private final ArrayList<String> fileNameList = new ArrayList<>();
-    private final ArrayList<String> ignoredFiles = new ArrayList<String>();
 
     public void init(Stage stage){
         this.panelManager = new PanelManager(this, stage);
@@ -51,10 +50,6 @@ public class AriJsonCreator {
 
     public ArrayList<String> getFileNameList() {
         return fileNameList;
-    }
-
-    public List<String> getIgnoredFiles() {
-        return ignoredFiles;
     }
 
     public void setUrl(String url) {
