@@ -1,0 +1,1 @@
+Gros il est 4h40 je suis mort je vais dormir un peu je ferai le readme propre avec gitignore plus tard
