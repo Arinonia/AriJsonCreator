@@ -57,9 +57,9 @@ Just me for the moment.
 
 _Versions history:_
 
-**Last release :** 1.0
+**Last release :** 1.0.2
 
-**Stable release :** 1.0
+**Stable release :** 1.0.2
 
 Download last release : [Download link](https://github.com/Arinonia/AriJsonCreator/releases/download/v1.0.2/AriJsonCreatorV2-1.0.2-SNAPSHOT.jar)
 
