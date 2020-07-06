@@ -61,7 +61,7 @@ _Versions history:_
 
 **Stable release :** 1.0
 
-Download last release : [Download link](https://github.com/Arinonia/AriJsonCreator/releases/download/v1.0/AriJsonCreator-1.0-SNAPSHOT.jar)
+Download last release : [Download link](https://github.com/Arinonia/AriJsonCreator/releases/download/v1.0.2/AriJsonCreatorV2-1.0.2-SNAPSHOT.jar)
 
 ## Authors:
 
