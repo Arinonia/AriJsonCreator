@@ -1,11 +1,13 @@
 package fr.arinonia.arijsoncreator.ui;
 
 import fr.arinonia.arijsoncreator.AriJsonCreator;
+import fr.arinonia.arijsoncreator.Main;
 import fr.arinonia.arijsoncreator.ui.panel.IPanel;
 import fr.arinonia.arijsoncreator.ui.panels.includes.TopPanel;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -42,6 +44,7 @@ public class PanelManager {
         this.stage.setResizable(false);
         this.stage.initStyle(StageStyle.UNDECORATED);
         this.stage.show();
+        this.stage.getIcons().add(new Image(Main.class.getResource("/img/icon.png").toExternalForm()));
         this.stage.centerOnScreen();
         this.layout = new GridPane();
         this.layout.setStyle("-fx-background-color: rgb(40,40,40);");
