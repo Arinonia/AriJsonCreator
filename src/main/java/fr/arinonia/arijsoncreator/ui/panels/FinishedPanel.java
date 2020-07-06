@@ -83,7 +83,7 @@ public class FinishedPanel extends Panel {
             DirectoryChooser chooser = new DirectoryChooser();
             chooser.setTitle("Select directory");
             File dir = chooser.showDialog(null);
-            File file = new File(dir.getAbsolutePath() + "instance.json");
+            File file = new File(dir.getAbsolutePath() + File.separator + "instance.json");
             try {
                 file.createNewFile();
             } catch (IOException ex) {
