@@ -113,27 +113,33 @@ public class SelectFolderPanel extends Panel {
             directoryChooser.setInitialDirectory(new File("C:"));
             directoryChooser.setTitle("Ari-JsonCreator | Directory chooser");
             File file = directoryChooser.showDialog(null);
+            if(!panelManager.getLayout().getChildren().contains(spinner))
+                panelManager.getLayout().getChildren().add(spinner);
             Thread t = new Thread(){
                 @Override
                 public void run() {
-                    next.setDisable(true);
-                    back.setDisable(true);
-                    listAllFile(file);
-                    List<DataFile> files = new ArrayList<DataFile>();
-                    for(int i = 0; i < panelManager.getAriJsonCreator().getFilesList().size(); i++){
-                        String s = panelManager.getAriJsonCreator().getFileNameList().get(i).substring(file.getAbsolutePath().length()+1).replace("\\", "/");
-                        files.add(new DataFile(s, panelManager.getAriJsonCreator().getFilesList().get(i),panelManager.getAriJsonCreator().getUrl().endsWith("/") ? panelManager.getAriJsonCreator().getUrl() + s : panelManager.getAriJsonCreator().getUrl() + "/" + s, panelManager.getAriJsonCreator().getSizeFileList().get(i)));
+                    if(file == null) {
+                        spinner.setVisible(false);
+                        System.out.println("Liste de fichiers vide");
+                    } else {
+                        spinner.setVisible(true);
+                        next.setDisable(true);
+                        back.setDisable(true);
+                        listAllFile(file);
+                        List<DataFile> files = new ArrayList<DataFile>();
+                        for(int i = 0; i < panelManager.getAriJsonCreator().getFilesList().size(); i++){
+                            String s = panelManager.getAriJsonCreator().getFileNameList().get(i).substring(file.getAbsolutePath().length()+1).replace("\\", "/");
+                            files.add(new DataFile(s, panelManager.getAriJsonCreator().getFilesList().get(i),panelManager.getAriJsonCreator().getUrl().endsWith("/") ? panelManager.getAriJsonCreator().getUrl() + s : panelManager.getAriJsonCreator().getUrl() + "/" + s, panelManager.getAriJsonCreator().getSizeFileList().get(i)));
+                        }
+                        panelManager.getAriJsonCreator().getData().setFiles(files);
+                        spinner.setVisible(false);
+                        next.setDisable(false);
+                        back.setDisable(false);
+                        select.setDisable(true);
                     }
-                    panelManager.getAriJsonCreator().getData().setFiles(files);
-                    spinner.setVisible(false);
-                    next.setDisable(false);
-                    back.setDisable(false);
-                    select.setDisable(true);
                 }
             };
             t.start();
-            panelManager.getLayout().getChildren().add(spinner);
-
         });
         select.setTranslateY(-30.0D);
         select.setOnMouseEntered(e->panelManager.getLayout().setCursor(Cursor.HAND));
