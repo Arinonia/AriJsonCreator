@@ -110,7 +110,12 @@ public class SelectFolderPanel extends Panel {
         select.setStyle("-fx-padding: 0.7em 0.57em; -fx-text-fill: #fff; -fx-border-color: #aa652f");
         select.setOnMouseClicked(e->{
             DirectoryChooser directoryChooser = new DirectoryChooser();
-            directoryChooser.setInitialDirectory(new File("C:"));
+            if(System.getProperty("os.name").toLowerCase().contains("win")){
+                directoryChooser.setInitialDirectory(new File("C:\\"));
+            }
+            else{
+                directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            }
             directoryChooser.setTitle("Ari-JsonCreator | Directory chooser");
             File file = directoryChooser.showDialog(null);
             Thread t = new Thread(){
