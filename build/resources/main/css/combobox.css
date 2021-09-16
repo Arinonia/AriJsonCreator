@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Medium.ttf');
+}
+
+.combo-box .cell {
+    -fx-background-color: #1B1A1C;
+    -fx-text-fill: #FFF;
+    -fx-border-color: #884fb0;
+    -fx-font-family: 'Roboto Medium';
+    -fx-font-size: 18px;
+}
+
+.combo-box .cell:hover {
+    -fx-background-color: #222226
+}
+
+.jfx-combo-box > .arrow-button,
+.jfx-combo-box:editable > .arrow-button,
+.jfx-combo-box:editable:focused > .arrow-button {
+    -fx-background-color: TRANSPARENT;
+    -fx-border-color: #884fb0;
+}

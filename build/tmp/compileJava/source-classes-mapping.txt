@@ -1,0 +1,64 @@
+fr/arinonia/arijsoncreator/ui/controls/MaterialComboBox.java
+ fr.arinonia.arijsoncreator.ui.controls.MaterialComboBox
+fr/arinonia/arijsoncreator/ui/controls/JFXLabel.java
+ fr.arinonia.arijsoncreator.ui.controls.JFXLabel
+fr/arinonia/arijsoncreator/file/ConfigJson.java
+ fr.arinonia.arijsoncreator.file.ConfigJson
+fr/arinonia/arijsoncreator/json/DataMaintenance.java
+ fr.arinonia.arijsoncreator.json.DataMaintenance
+fr/arinonia/arijsoncreator/Main.java
+ fr.arinonia.arijsoncreator.Main
+fr/arinonia/arijsoncreator/utils/I18n.java
+ fr.arinonia.arijsoncreator.utils.I18n
+fr/arinonia/arijsoncreator/ui/controls/IComponentAction.java
+ fr.arinonia.arijsoncreator.ui.controls.IComponentAction
+fr/arinonia/arijsoncreator/ui/includes/TopPanel.java
+ fr.arinonia.arijsoncreator.ui.includes.TopPanel
+fr/arinonia/arijsoncreator/utils/ASCIIColor.java
+ fr.arinonia.arijsoncreator.utils.ASCIIColor
+fr/arinonia/arijsoncreator/utils/Logger.java
+ fr.arinonia.arijsoncreator.utils.Logger
+fr/arinonia/arijsoncreator/ui/controls/MaterialButtonSkin.java
+ fr.arinonia.arijsoncreator.ui.controls.MaterialButtonSkin
+fr/arinonia/arijsoncreator/FxApplication.java
+ fr.arinonia.arijsoncreator.FxApplication
+fr/arinonia/arijsoncreator/ui/IPanel.java
+ fr.arinonia.arijsoncreator.ui.IPanel
+fr/arinonia/arijsoncreator/ui/controls/Alert.java
+ fr.arinonia.arijsoncreator.ui.controls.Alert
+fr/arinonia/arijsoncreator/ui/controls/MaterialSwitchButton.java
+ fr.arinonia.arijsoncreator.ui.controls.MaterialSwitchButton
+fr/arinonia/arijsoncreator/AriJsonCreator.java
+ fr.arinonia.arijsoncreator.AriJsonCreator
+fr/arinonia/arijsoncreator/file/ConfigurationFolder.java
+ fr.arinonia.arijsoncreator.file.ConfigurationFolder
+fr/arinonia/arijsoncreator/ui/panels/RootPanel.java
+ fr.arinonia.arijsoncreator.ui.panels.RootPanel
+fr/arinonia/arijsoncreator/ui/controls/MaterialButton.java
+ fr.arinonia.arijsoncreator.ui.controls.MaterialButton
+fr/arinonia/arijsoncreator/json/Data.java
+ fr.arinonia.arijsoncreator.json.Data
+fr/arinonia/arijsoncreator/file/FileManager.java
+ fr.arinonia.arijsoncreator.file.FileManager
+fr/arinonia/arijsoncreator/file/Settings.java
+ fr.arinonia.arijsoncreator.file.Settings
+fr/arinonia/arijsoncreator/utils/Constants.java
+ fr.arinonia.arijsoncreator.utils.Constants
+fr/arinonia/arijsoncreator/file/Config.java
+ fr.arinonia.arijsoncreator.file.Config
+fr/arinonia/arijsoncreator/ui/panels/EndPanel.java
+ fr.arinonia.arijsoncreator.ui.panels.EndPanel
+fr/arinonia/arijsoncreator/ui/UiManager.java
+ fr.arinonia.arijsoncreator.ui.UiManager
+fr/arinonia/arijsoncreator/json/DataFile.java
+ fr.arinonia.arijsoncreator.json.DataFile
+fr/arinonia/arijsoncreator/ui/controls/IgnoredComboBox.java
+ fr.arinonia.arijsoncreator.ui.controls.IgnoredComboBox
+fr/arinonia/arijsoncreator/ui/Panel.java
+ fr.arinonia.arijsoncreator.ui.Panel
+fr/arinonia/arijsoncreator/ui/panels/SettingsPanel.java
+ fr.arinonia.arijsoncreator.ui.panels.SettingsPanel
+fr/arinonia/arijsoncreator/ui/panels/HomePanel.java
+ fr.arinonia.arijsoncreator.ui.panels.HomePanel
+fr/arinonia/arijsoncreator/ui/panels/CreateConfigPanel.java
+ fr.arinonia.arijsoncreator.ui.panels.CreateConfigPanel

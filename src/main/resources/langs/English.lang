@@ -1,0 +1,36 @@
+home.welcome.text=Welcome on AriJsonCreator
+home.message.text=In this software you will be able to create a JSON to use my updater.
+home.message2.text=This JSON will contain: path, url, md5 and size of file.
+home.btnStart.text=Create config !
+home.copyright.text=© Developed by Arinonia
+home.emptyconfig.text=You don't have configuration
+home.btnLoad.text=Load configuration !
+#You don't have any configuration to load
+home.alert.noconfig.text=You have no configuration to load
+
+settings.selectLang.text=Select your language
+settings.btnBack.text=Back
+
+alert.title.text=Error
+
+createconfig.configname.text=Name:
+createconfig.maintenance.enable.text=Enable
+createconfig.maintenance.disable.text=Disable
+createconfig.maintenance.text=Maintenance reason
+createconfig.choosefolder.text=Choose folder
+createconfig.ignoredlabel.text=Ignored files / folders:
+createconfig.addignored.text=Add
+createconfig.removeignored.text=Remove
+config.alert.emptyignored.text=You need to complete ignored field
+config.emptyignoredlist.text=No file or folder.
+config.alert.emptyignoredlist.text=Your list is empty
+config.start.text=Generate JSON
+config.save.text=Save
+config.alert.emptyname.text=Name field is empty !
+config.alert.emptyurl.text=URL field is empty !
+config.alert.badurl.text=Your URL is invalid !
+config.alert.foldernull.text=You need to choose you folder !
+
+end.title.text=Copy JSON
+end.btnexit.text=Exit
+end.btnsave.text=Save

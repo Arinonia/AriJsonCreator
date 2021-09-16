@@ -1,0 +1,35 @@
+home.welcome.text=Bienvenue sur AriJsonCreator
+home.message.text=Dans ce logiciel, vous serez en mesure de créer un JSON pour utiliser mon updater.
+home.message2.text=Ce JSON contiendra : le chemin, l'url, le md5 et la taille du fichier.
+home.btnStart.text=Créer une config
+home.copyright.text=© Développé par Arinonia
+home.emptyconfig.text=Vous n'avez aucune config
+home.btnLoad.text=Charger une configuration !
+home.alert.noconfig.text=Vous n'avez aucune configuration à charger
+
+settings.selectLang.text=Choisis ton langage
+settings.btnBack.text=Retour
+
+alert.title.text=Erreur
+
+createconfig.configname.text=Nom:
+createconfig.maintenance.enable.text=Activée
+createconfig.maintenance.disable.text=Desactivée
+createconfig.maintenance.text=Raison de la maintenance
+createconfig.choosefolder.text=Choisis un dossier
+createconfig.ignoredlabel.text=Fichiers ou dossiers ignorés:
+createconfig.addignored.text=Ajouter
+createconfig.removeignored.text=Retirer
+config.alert.emptyignored.text=Vous devez remplir le champ fichiers ignorés
+config.emptyignoredlist.text=Aucun fichier ou dossier.
+config.alert.emptyignoredlist.text=Votre liste est vide
+config.start.text=Générer le JSON
+config.save.text=Sauvegarder
+config.alert.emptyname.text=Le champ nom est vide !
+config.alert.emptyurl.text=Le champ URL est vide !
+config.alert.badurl.text=Votre URL n'est pas valide !
+config.alert.foldernull.text=Vous devez préciser un dossier !
+
+end.title.text=Copier le JSON
+end.btnexit.text=Quitter
+end.btnsave.text=Sauvegarder
