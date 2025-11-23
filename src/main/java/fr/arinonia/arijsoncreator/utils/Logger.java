@@ -25,7 +25,7 @@ public class Logger {
     }
 
     public void logWarn(String message) {
-        this.log(message, ASCIIColor.RED);
+        this.log(message, ASCIIColor.YELLOW);
     }
 
 }

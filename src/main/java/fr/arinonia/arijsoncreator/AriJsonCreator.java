@@ -4,45 +4,46 @@ import com.google.gson.Gson;
 import fr.arinonia.arijsoncreator.file.FileManager;
 import fr.arinonia.arijsoncreator.file.Settings;
 import fr.arinonia.arijsoncreator.json.Data;
+import fr.arinonia.arijsoncreator.service.FileScanner;
+import fr.arinonia.arijsoncreator.service.JsonFormatter;
 import fr.arinonia.arijsoncreator.ui.UiManager;
 import fr.arinonia.arijsoncreator.ui.panels.RootPanel;
+import fr.arinonia.arijsoncreator.utils.Constants;
 import fr.arinonia.arijsoncreator.utils.I18n;
 import fr.arinonia.arijsoncreator.utils.Logger;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AriJsonCreator {
 
-    private final Gson json = new Gson();
-    private final ArrayList<String> filesList = new ArrayList<>();
-    private final ArrayList<String> sizeFileList = new ArrayList<>();
-    private final ArrayList<String> fileNameList = new ArrayList<>();
+    private final Gson gson = new Gson();
     private final Data data = new Data();
     private final Logger logger = new Logger();
     private final FileManager fileManager = new FileManager(this);
+    private final FileScanner fileScanner;
     private final UiManager uiManager;
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private Settings settings;
-    private String url;
+    private String baseUrl;
 
     public AriJsonCreator() {
+        this.fileScanner = new FileScanner(logger);
         this.uiManager = new UiManager(this);
     }
 
     public void init(final Stage stage) {
         try {
             this.setup(stage);
-        } catch (Throwable t) {
-            logger.logWarn(t.getMessage());
-            t.printStackTrace();
-            logger.logError("YAMETE KUDASAI ONI CHAN !!!!!!!!!!!!");
+        } catch (Exception e) {
+            logger.logError("Failed to initialize application: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -76,100 +77,31 @@ public class AriJsonCreator {
     }
 
     public boolean isValidURL(String theUrl) {
+        HttpURLConnection connect = null;
         try {
             URL url = new URL(theUrl);
-            HttpURLConnection connect = (HttpURLConnection) url.openConnection();
-            return connect.getResponseCode() == 200 || connect.getResponseCode() == 202;
+            connect = (HttpURLConnection) url.openConnection();
+            connect.setConnectTimeout(Constants.CONNECTION_TIMEOUT);
+            connect.setReadTimeout(Constants.READ_TIMEOUT);
+            int responseCode = connect.getResponseCode();
+            return responseCode == 200 || responseCode == 202;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.logWarn("URL validation failed: " + e.getMessage());
             return false;
-        }
-    }
-
-    public void listAllFile(File file) {
-        File[] files = file.listFiles();
-
-        if (files != null) {
-            for (File f : files) {
-                if (f.isDirectory()) {
-                    listAllFile(f);
-                } else {
-                    try {
-                        this.getFilesList().add(this.checkSumToString(f.getAbsolutePath()));
-                        this.getSizeFileList().add(Long.toString(f.length()));
-                        this.getFileNameList().add(f.getAbsolutePath());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+        } finally {
+            if (connect != null) {
+                connect.disconnect();
             }
         }
     }
 
-    private byte[] createChecksum(String file) throws Exception {
-        InputStream is = new FileInputStream(file);
-        byte[] buffer = new byte[1024];
-        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-        int numRead;
-
-        do {
-            numRead = is.read(buffer);
-            if (numRead > 0) {
-                messageDigest.update(buffer, 0, numRead);
-            }
-        } while (numRead != -1);
-        is.close();
-        return messageDigest.digest();
-    }
-
-    private String checkSumToString(String file) throws Exception{
-        byte[] bytes = createChecksum(file);
-        StringBuilder builder = new StringBuilder();
-
-        for (byte b : bytes) {
-            builder.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-        }
-        return builder.toString();
-    }
-
+    /**
+     * Formats a JSON string with proper indentation.
+     * @deprecated Use {@link JsonFormatter#format(String)} directly
+     */
+    @Deprecated
     public String formatJSON(String json) {
-        char[] chars = json.toCharArray();
-        String newLine = System.lineSeparator();
-        boolean begin_quotes = false;
-
-        StringBuilder ret = new StringBuilder();
-        for (int i = 0, indent = 0; i < chars.length; i++) {
-            char c = chars[i];
-
-            if (c == '\"') {
-                ret.append(c);
-                begin_quotes = !begin_quotes;
-                continue;
-            }
-
-            if (!begin_quotes) {
-                switch (c) {
-                    case '{':
-                    case '[':
-                        ret.append(c).append(newLine).append(String.format("%" + (indent += 2) + "s", ""));
-                        continue;
-                    case '}':
-                    case ']':
-                        ret.append(newLine).append((indent -= 2) > 0 ? String.format("%" + indent + "s", "") : "").append(c);
-                        continue;
-                    case ':':
-                        ret.append(c).append(" ");
-                        continue;
-                    case ',':
-                        ret.append(c).append(newLine).append(indent > 0 ? String.format("%" + indent + "s", "") : "");
-                        continue;
-                    default:
-                        if (Character.isWhitespace(c)) continue;
-                }
-            }
-            ret.append(c).append(c == '\\' ? "" + chars[++i] : "");
-        }
-        return ret.toString();
+        return JsonFormatter.format(json);
     }
 
 
@@ -189,31 +121,55 @@ public class AriJsonCreator {
         return this.settings;
     }
 
+    public Gson getGson() {
+        return this.gson;
+    }
+
+    /**
+     * @deprecated Use {@link #getGson()} instead
+     */
+    @Deprecated
     public Gson getJson() {
-        return this.json;
+        return this.gson;
     }
 
     public Data getData() {
         return this.data;
     }
 
+    public String getBaseUrl() {
+        return this.baseUrl;
+    }
+
+    /**
+     * @deprecated Use {@link #getBaseUrl()} instead
+     */
+    @Deprecated
     public String getUrl() {
-        return this.url;
+        return this.baseUrl;
     }
 
-    public ArrayList<String> getFilesList() {
-        return this.filesList;
+    public FileScanner getFileScanner() {
+        return this.fileScanner;
     }
 
-    public ArrayList<String> getSizeFileList() {
-        return this.sizeFileList;
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 
-    public ArrayList<String> getFileNameList() {
-        return this.fileNameList;
-    }
-
+    /**
+     * @deprecated Use {@link #setBaseUrl(String)} instead
+     */
+    @Deprecated
     public void setUrl(String url) {
-        this.url = url;
+        this.baseUrl = url;
+    }
+
+    public ExecutorService getExecutorService() {
+        return this.executorService;
+    }
+
+    public void shutdown() {
+        executorService.shutdown();
     }
 }

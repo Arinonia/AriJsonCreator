@@ -1,10 +1,10 @@
 package fr.arinonia.arijsoncreator.file;
 
 import fr.arinonia.arijsoncreator.AriJsonCreator;
+import fr.arinonia.arijsoncreator.utils.Constants;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ConfigurationFolder {
 
@@ -20,10 +20,13 @@ public class ConfigurationFolder {
 
     public ArrayList<File> listAllConfig() {
         ArrayList<File> configFiles = new ArrayList<>();
+        File[] files = this.getFolder().listFiles();
 
-        for (File file : Objects.requireNonNull(this.getFolder().listFiles())) {
-            if (file.getName().endsWith(".jsonconfig")) {
-                configFiles.add(file);
+        if (files != null) {
+            for (File file : files) {
+                if (file.getName().endsWith(Constants.CONFIG_EXTENSION)) {
+                    configFiles.add(file);
+                }
             }
         }
         return configFiles;

@@ -1,6 +1,7 @@
 package fr.arinonia.arijsoncreator.file;
 
 import fr.arinonia.arijsoncreator.AriJsonCreator;
+import fr.arinonia.arijsoncreator.utils.Constants;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,7 +32,7 @@ public class Config {
     }
 
     public ConfigJson loadConfig(String theFile) {
-        File file = new File(ariJsonCreator.getFileManager().getConfigurationFolder().getFolder(), theFile + ".jsonconfig");
+        File file = new File(ariJsonCreator.getFileManager().getConfigurationFolder().getFolder(), theFile + Constants.CONFIG_EXTENSION);
 
         if (file.exists()) {
             try {
@@ -56,7 +57,7 @@ public class Config {
         if (!fileExist()) {
             try {
                 ConfigJson configJson = new ConfigJson(this.name, this.url, this.path, this.ignored);
-                File file = new File(ariJsonCreator.getFileManager().getConfigurationFolder().getFolder(), this.name + ".jsonconfig");
+                File file = new File(ariJsonCreator.getFileManager().getConfigurationFolder().getFolder(), this.name + Constants.CONFIG_EXTENSION);
                 file.createNewFile();
                 this.write(file, this.ariJsonCreator.getJson().toJson(configJson));
             } catch (IOException e) {
@@ -68,23 +69,21 @@ public class Config {
     public void updateConfig() {
         ConfigJson configJson = new ConfigJson(this.name, this.url, this.path, this.ignored);
 
-        File file = new File(ariJsonCreator.getFileManager().getConfigurationFolder().getFolder(), this.name + ".jsonconfig");
+        File file = new File(ariJsonCreator.getFileManager().getConfigurationFolder().getFolder(), this.name + Constants.CONFIG_EXTENSION);
         this.write(file, "");
         this.write(file, this.ariJsonCreator.getJson().toJson(configJson));
     }
 
-    private void write(File file, String json){
-        try {
-            FileWriter fw = new FileWriter(file);
+    private void write(File file, String json) {
+        try (FileWriter fw = new FileWriter(file)) {
             fw.write(json);
-            fw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            ariJsonCreator.getLogger().logError("Failed to write config: " + e.getMessage());
         }
     }
 
     public boolean fileExist() {
-        return new File(ariJsonCreator.getFileManager().getConfigurationFolder().getFolder(), this.name + ".jsonconfig").exists();
+        return new File(ariJsonCreator.getFileManager().getConfigurationFolder().getFolder(), this.name + Constants.CONFIG_EXTENSION).exists();
     }
 
 }

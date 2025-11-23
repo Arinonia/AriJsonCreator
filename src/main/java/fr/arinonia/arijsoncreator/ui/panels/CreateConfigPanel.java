@@ -7,6 +7,7 @@ import fr.arinonia.arijsoncreator.Main;
 import fr.arinonia.arijsoncreator.file.Config;
 import fr.arinonia.arijsoncreator.json.DataFile;
 import fr.arinonia.arijsoncreator.json.DataMaintenance;
+import fr.arinonia.arijsoncreator.service.JsonFormatter;
 import fr.arinonia.arijsoncreator.ui.Panel;
 import fr.arinonia.arijsoncreator.ui.UiManager;
 import fr.arinonia.arijsoncreator.ui.controls.Alert;
@@ -27,7 +28,6 @@ import javafx.util.Duration;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -248,13 +248,6 @@ public class CreateConfigPanel extends Panel {
                 new Alert(uiManager, I18n.LANG.getTranslation("config.alert.emptyurl.text"));
                 return;
             }
-            /*if (!this.uiManager.getAriJsonCreator().isValidURL(configUrlField.getText())) {
-                spinner.setVisible(false);
-                this.disabledField(false);
-                System.out.println("why: " + configUrlField.getText());
-                new Alert(uiManager, I18n.LANG.getTranslation("config.alert.badurl.text"));
-                return;
-            }*/
             if (this.file == null) {
                 spinner.setVisible(false);
                 this.disabledField(false);
@@ -263,7 +256,7 @@ public class CreateConfigPanel extends Panel {
                 return;
             }
             DataMaintenance maintenance = new DataMaintenance();
-            uiManager.getAriJsonCreator().setUrl(configUrlField.getText());
+            uiManager.getAriJsonCreator().setBaseUrl(configUrlField.getText());
             uiManager.getAriJsonCreator().getData().setMaintenance(maintenance);
             uiManager.getAriJsonCreator().getData().getMaintenance().setMaintenance(switchButton.isSelected());
             uiManager.getAriJsonCreator().getData().getMaintenance().setMessage(maintenanceText.getText());
@@ -275,20 +268,27 @@ public class CreateConfigPanel extends Panel {
                 }
             }
 
-            Thread t = new Thread(() -> {
-                uiManager.getAriJsonCreator().listAllFile(file);
-                List<DataFile> files = new ArrayList<>();
-                for (int i = 0; i < uiManager.getAriJsonCreator().getFilesList().size(); i++) {
-                    String path = uiManager.getAriJsonCreator().getFileNameList().get(i).substring(file.getAbsolutePath().length() + 1).replace("\\", "/");
-                    files.add(new DataFile(path, uiManager.getAriJsonCreator().getFilesList().get(i),
-                            uiManager.getAriJsonCreator().getUrl().endsWith("/") ? uiManager.getAriJsonCreator().getUrl() + path : uiManager.getAriJsonCreator().getUrl() + "/" + path,
-                            uiManager.getAriJsonCreator().getSizeFileList().get(i)));
+            uiManager.getAriJsonCreator().getExecutorService().submit(() -> {
+                try {
+                    String baseUrl = uiManager.getAriJsonCreator().getBaseUrl();
+                    List<DataFile> files = uiManager.getAriJsonCreator().getFileScanner()
+                            .scanDirectory(file, baseUrl);
+
+                    uiManager.getAriJsonCreator().getData().setFiles(files);
+
+                    String rawJson = uiManager.getAriJsonCreator().getGson()
+                            .toJson(uiManager.getAriJsonCreator().getData());
+                    String formattedJson = JsonFormatter.format(rawJson);
+
+                    Platform.runLater(() -> uiManager.showPanel(this.layout, new EndPanel(uiManager, formattedJson)));
+                } catch (Exception ex) {
+                    Platform.runLater(() -> {
+                        spinner.setVisible(false);
+                        disabledField(false);
+                        new Alert(uiManager, "Error: " + ex.getMessage());
+                    });
                 }
-                uiManager.getAriJsonCreator().getData().setFiles(files);
-                String json = uiManager.getAriJsonCreator().formatJSON(uiManager.getAriJsonCreator().getJson().toJson(uiManager.getAriJsonCreator().getData()));
-                Platform.runLater(() -> uiManager.showPanel(this.layout, new EndPanel(uiManager, json)));
             });
-            t.start();
         });
         this.layout.getChildren().add(start);
 
@@ -309,10 +309,6 @@ public class CreateConfigPanel extends Panel {
                 new Alert(uiManager, I18n.LANG.getTranslation("config.alert.emptyurl.text"));
                 return;
             }
-            /*if (!this.uiManager.getAriJsonCreator().isValidURL(configUrlField.getText())) {
-                new Alert(uiManager, I18n.LANG.getTranslation("config.alert.badurl.text"));
-                return;
-            }*/
             if (this.file == null) {
                 new Alert(uiManager, I18n.LANG.getTranslation("config.alert.foldernull.text"));
                 return;
